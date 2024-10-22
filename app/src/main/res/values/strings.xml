@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Recipe List</string>
+    <string name="home_screen_title">Home</string>
+    <string name="insert_screen_title">Insert The Recipe</string>
+    <string name="save_button">Save</string>
+    <string name="add_ingredient_button">Add Ingredient</string>
+    <string name="add_step_button">Add Step</string>
+    <string name="details_screen_title">Recipe Details</string>
+    <string name="edit_button">Edit</string>
+    <string name="edit_screen_title">Edit Recipe</string>
+    <string name="update_button">Update</string>
+    <string name="delete_button">Delete</string>
+    <string name="no_item_description">Oops!\nNo items in the inventory.\nTap + to add.</string>
+    <string name="attention">Attention</string>
+    <string name="delete_question">Are you sure you want to delete?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="recipe_title">Name</string>
+    <string name="recipe_description">Description</string>
+    <string name="recipe_time">Time</string>
+    <string name="recipe_servings">Servings</string>
+    <string name="recipe_ingredients">Ingredients</string>
+    <string name="recipe_steps">Steps</string>
+</resources>
