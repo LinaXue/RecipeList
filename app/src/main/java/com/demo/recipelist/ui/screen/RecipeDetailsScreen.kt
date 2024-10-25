@@ -221,30 +221,30 @@ fun DeleteConfirmationDialog(
     )
 }
 
-@Preview(apiLevel = 33, showBackground = true)
-@Composable
-fun RecipeDetailsCardPreview() {
-    RecipeDetailsCard(
-        Recipe(
-            id = 0,
-            title = "食物標題",
-            description = "作法描述 blabla...",
-            time = "30",
-            servings = 2
-        )
-    )
-}
+//@Preview(apiLevel = 33, showBackground = true)
+//@Composable
+//fun RecipeDetailsCardPreview() {
+//    RecipeDetailsCard(
+//        Recipe(
+//            id = 0,
+//            title = "食物標題",
+//            description = "作法描述 blabla...",
+//            time = "30",
+//            servings = 2
+//        )
+//    )
+//}
 
-@Preview(apiLevel = 33, showBackground = true)
-@Composable
-fun RecipeStepsPreview() {
-    RecipeSteps(
-        Recipe(
-            id = 0,
-            title = "食物標題",
-            description = "作法描述 blabla...",
-            time = "30",
-            servings = 2
-        )
-    )
-}
+//@Preview(apiLevel = 33, showBackground = true)
+//@Composable
+//fun RecipeStepsPreview() {
+//    RecipeSteps(
+//        Recipe(
+//            id = 0,
+//            title = "食物標題",
+//            description = "作法描述 blabla...",
+//            time = "30",
+//            servings = 2
+//        )
+//    )
+//}

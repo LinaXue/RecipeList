@@ -39,6 +39,12 @@ fun RecipeEditScreen(
         RecipeInsertBody(
             recipeUiState = viewModel.recipeUiState,
             onRecipeValueChange = viewModel::updateUiState,
+            ingredientsUiState = viewModel.ingredientUiState,
+            onIngredientValueChange = viewModel::updateIngredientUiState,
+            onIngredientRemove = viewModel::deleteIngredientUiState,
+            stepUiState = viewModel.stepUiState,
+            onStepValueChange = viewModel::updateStepUiState,
+            onStepRemove = viewModel::deleteStepUiState,
             onSaveClicked = {
                 coroutineScope.launch {
                     viewModel.updateRecipe()
