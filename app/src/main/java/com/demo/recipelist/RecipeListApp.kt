@@ -2,6 +2,8 @@ package com.demo.recipelist
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -10,9 +12,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.demo.recipelist.ui.HomeScreen
 import com.demo.recipelist.ui.navigation.RecipeListNavHost
+import com.demo.recipelist.ui.theme.RecipeListTheme
 
 @Composable
 fun RecipeListApp(navController: NavHostController = rememberNavController()) {
@@ -25,6 +31,13 @@ fun RecipeListTopAppBar(
     title: String,
     canNavigateBack: Boolean,
     navigateUp: () -> Unit = {},
+    saveButton: Boolean = false,
+    saveEnable: Boolean = false,
+    onSaveClick: () -> Unit = {},
+    deleteButton: Boolean = false,
+    onDeleteClick: () -> Unit = {},
+    searchButton: Boolean = false,
+    onSearchClick: () -> Unit = {}
 ) {
     TopAppBar(
         title = { Text(title) },
@@ -41,6 +54,50 @@ fun RecipeListTopAppBar(
                     )
                 }
             }
+        },
+        actions = {
+            if (searchButton) {
+                IconButton(onClick = onSearchClick) {
+                    Icon(
+                        imageVector = Icons.Filled.Search,
+                        contentDescription = "Search"
+                    )
+                }
+            }
+            if (saveButton) {
+                IconButton(
+                    onClick = onSaveClick,
+                    enabled = saveEnable,
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.baseline_save_24),
+                        contentDescription = "Save"
+                    )
+                }
+            }
+            if (deleteButton) {
+                IconButton(onClick = onDeleteClick) {
+                    Icon(
+                        imageVector = Icons.Filled.Delete,
+                        contentDescription = "Delete"
+                    )
+                }
+            }
         }
     )
+}
+
+@Preview(apiLevel = 33, showBackground = true)
+@Composable
+fun RecipeListTopAppBarPreview() {
+    RecipeListTheme {
+        RecipeListTopAppBar(
+            title = "TEST Screen",
+            canNavigateBack = true,
+            searchButton = true,
+            saveButton = true,
+            saveEnable = false,
+            deleteButton = true
+        )
+    }
 }

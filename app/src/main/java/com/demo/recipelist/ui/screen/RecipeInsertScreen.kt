@@ -69,21 +69,17 @@ fun RecipeInsertScreen(
             RecipeListTopAppBar(
                 title = stringResource(InsertDestination.titleRes),
                 canNavigateBack = canNavigateBack,
-                navigateUp = onNavigateUp
-            )
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
+                navigateUp = onNavigateUp,
+                saveButton = true,
+                saveEnable = viewModel.validateInput(),
+                onSaveClick = {
                     coroutineScope.launch {
                         viewModel.insertRecipe()
                         navigateBack()
                     }
-                },
-            ) {
-                Icon(imageVector = Icons.Filled.Done, contentDescription = "Add the recipe.")
-            }
-        }
+                }
+            )
+        },
     ) {
         RecipeInsertBody(
             recipeUiState = viewModel.recipeUiState,
@@ -94,47 +90,10 @@ fun RecipeInsertScreen(
             stepUiState = viewModel.stepUiState,
             onStepValueChange = viewModel::updateStepUiState,
             onStepRemove = viewModel::deleteStepUiState,
-            onSaveClicked = {
-                coroutineScope.launch {
-                    viewModel.insertRecipe()
-                    navigateBack()
-                }
-            },
             paddingValues = it
         )
     }
 }
-
-//@Composable
-//fun RecipeInsertBodyOld(
-//    recipeUiState: RecipeUiState,
-//    onRecipeValueChange: (RecipeDetails) -> Unit,
-//    onSaveClicked: () -> Unit,
-//    modifier: Modifier = Modifier,
-//    paddingValues: PaddingValues
-//) {
-//    Column(
-//        horizontalAlignment = Alignment.CenterHorizontally,
-//        verticalArrangement = Arrangement.Center,
-//        modifier = modifier.padding(paddingValues)
-//            //.verticalScroll(rememberScrollState())
-//    ) {
-//        RecipeInputForm(
-//            recipeDetails = recipeUiState.recipeDetails,
-//            onValueChange = onRecipeValueChange,
-//        )
-//        Spacer(modifier = modifier.height(16.dp))
-//        // DraggableList("食材")
-//        Spacer(modifier = modifier.height(16.dp))
-//        Button(
-//            onClick = onSaveClicked,
-//            enabled = recipeUiState.isInputValid,
-//            shape = MaterialTheme.shapes.small
-//        ) {
-//            Text(text = stringResource(id = R.string.save_button))
-//        }
-//    }
-//}
 
 @Composable
 fun RecipeInsertBody(
@@ -146,7 +105,6 @@ fun RecipeInsertBody(
     stepUiState: SnapshotStateList<String>,
     onStepValueChange: (Int, String) -> Unit,
     onStepRemove: (String) -> Unit,
-    onSaveClicked: () -> Unit,
     modifier: Modifier = Modifier,
     paddingValues: PaddingValues
 ) {
@@ -341,7 +299,6 @@ fun TestPreview() {
             stepUiState = steps,
             onStepValueChange = { intVal, strVal -> Unit },
             onStepRemove = { },
-            onSaveClicked = { },
             paddingValues = PaddingValues(12.dp)
         )
 //        Column {

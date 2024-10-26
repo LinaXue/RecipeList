@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -21,11 +22,10 @@ class RecipeEditViewModel(
     savedStateHandle: SavedStateHandle,
     private val recipeRepository: RecipeRepository
 ) : ViewModel() {
-
     var recipeUiState by mutableStateOf(RecipeUiState())
         private set
 
-    var ingredientUiState = mutableStateListOf("", "")
+    lateinit var ingredientUiState: SnapshotStateList<String>
         private set
 
     var stepUiState = mutableStateListOf("", "")
@@ -41,7 +41,6 @@ class RecipeEditViewModel(
                 .toRecipeUiState(isInputValid = true)
         }
     }
-
     fun updateUiState(recipeDetails: RecipeDetails) {
         recipeUiState =
             RecipeUiState(recipeDetails = recipeDetails, isInputValid = validateInput(recipeDetails))
@@ -70,7 +69,7 @@ class RecipeEditViewModel(
         }
     }
 
-    private fun validateInput(uiState: RecipeDetails = recipeUiState.recipeDetails): Boolean {
+    fun validateInput(uiState: RecipeDetails = recipeUiState.recipeDetails): Boolean {
         return with(uiState) {
             title.isNotBlank() && description.isNotBlank() && time.isNotBlank()
         }

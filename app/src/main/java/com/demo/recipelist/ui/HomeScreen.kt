@@ -52,9 +52,12 @@ fun HomeScreen(
     Scaffold(
         topBar = {
             RecipeListTopAppBar(
-            title = stringResource(HomeDestination.titleRes),
-            canNavigateBack = false
-        ) },
+                title = stringResource(HomeDestination.titleRes),
+                canNavigateBack = false,
+                searchButton = true,
+                onSearchClick = { /*TODO*/ }
+            )
+        },
         floatingActionButton = {
             FloatingActionButton(onClick = { navigateToRecipeInsert() }) {
                 Icon(imageVector = Icons.Filled.Add, contentDescription = "Add the recipe.")
