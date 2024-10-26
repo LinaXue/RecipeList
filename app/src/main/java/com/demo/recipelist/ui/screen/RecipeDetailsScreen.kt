@@ -109,6 +109,8 @@ fun RecipeDetailsScreen(
         // Text(text = stringResource(R.string.edit_screen_title), modifier = Modifier.padding(it))
         RecipeDetailsBody(
             recipeDetails = uiState.value,
+            ingList = viewModel.stringToList(uiState.value.ingredients),
+            stepList = viewModel.stringToList(uiState.value.steps),
             onDelete = {
                 coroutineScope.launch {
                     viewModel.deleteItem()
@@ -123,18 +125,12 @@ fun RecipeDetailsScreen(
 @Composable
 private fun RecipeDetailsBody(
     recipeDetails: RecipeDetails,
+    ingList: List<String>,
+    stepList: List<String>,
     onDelete: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var deleteConfirmationRequired by rememberSaveable { mutableStateOf(false) }
-    val ingList = listOf("雞腿肉", "蔥 切段", "薑 切片", "蒜頭剝皮", "米酒適量", "喜歡的蔬菜")
-    val stepList = listOf(
-        "雞腿肉撒鹽巴、白胡椒粉醃製 10 分鐘",
-        "滾水放入雞腿肉、蔥、薑、蒜、米酒，小火煮 10 分鐘",
-        "10 分鐘後取出雞腿肉切塊",
-        "雞湯放入喜歡的蔬菜川燙",
-        "川燙後瀝出雞湯，蔬菜與雞腿肉放一起調味"
-    )
 
     LazyColumn(
         modifier = modifier
@@ -240,38 +236,6 @@ private fun RecipeDetailsBody(
 }
 
 @Composable
-fun RecipeDetailsCard(
-    recipe: Recipe,
-    modifier: Modifier = Modifier
-) {
-    Card(
-        modifier = modifier, colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-        )
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            Row(modifier = modifier) {
-                Text(text = stringResource(R.string.recipe_title))
-                Spacer(modifier = Modifier.weight(1f))
-                Text(text = recipe.title, fontWeight = FontWeight.Bold)
-            }
-            Row(horizontalArrangement = Arrangement.Center, modifier = modifier.fillMaxWidth()) {
-                Text(text = "Time: ${recipe.time} mins")
-                Spacer(modifier = Modifier.width(30.dp))
-                Text(text = "Servings: ${recipe.servings}")
-            }
-
-        }
-    }
-}
-
-@Composable
 fun StringListRow(
     label: String = "",
     index: Int = 0,
@@ -286,7 +250,7 @@ fun StringListRow(
         modifier = modifier.padding(8.dp)
     ) {
         Text(
-            text = if (label == "step") "step ${index.toString()}: $item" else item,
+            text = if (label == "step") "step ${index}: $item" else item,
             modifier = modifier.fillMaxWidth().padding(8.dp)
         )
     }
@@ -328,6 +292,14 @@ fun RecipeDetailsCardPreview() {
                 servings = "4",
                 ingredients = "",
                 steps = ""
+            ),
+            ingList = listOf("雞腿肉", "蔥 切段", "薑 切片", "蒜頭剝皮", "米酒適量", "喜歡的蔬菜"),
+            stepList = listOf(
+                "雞腿肉撒鹽巴、白胡椒粉醃製 10 分鐘",
+                "滾水放入雞腿肉、蔥、薑、蒜、米酒，小火煮 10 分鐘",
+                "10 分鐘後取出雞腿肉切塊",
+                "雞湯放入喜歡的蔬菜川燙",
+                "川燙後瀝出雞湯，蔬菜與雞腿肉放一起調味"
             ),
             onDelete = { }
         )

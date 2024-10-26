@@ -1,5 +1,7 @@
 package com.demo.recipelist.ui.screen
 
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -35,5 +37,9 @@ class RecipeDetailsViewModel(
 
     suspend fun deleteItem() {
         recipeRepository.deleteRecipe(uiState.value.toRecipe())
+    }
+
+    fun stringToList(items: String, pattern: String = "/nexTNext/"): List<String> {
+        return items.split(regex = pattern.toPattern())
     }
 }
