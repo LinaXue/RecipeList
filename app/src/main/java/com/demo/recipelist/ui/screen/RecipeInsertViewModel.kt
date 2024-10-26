@@ -22,11 +22,11 @@ class RecipeInsertViewModel(
     var stepUiState = mutableStateListOf("", "")
         private set
 
-    private fun validateInput(
+    fun validateInput(
         uiState: RecipeDetails = recipeUiState.recipeDetails
     ): Boolean {
         return with(uiState) {
-            title.isNotBlank() && time.isNotBlank()
+            title.isNotBlank() && time.isNotBlank() && servings.isNotBlank()
         }
     }
     private fun validateIngredients(): String {

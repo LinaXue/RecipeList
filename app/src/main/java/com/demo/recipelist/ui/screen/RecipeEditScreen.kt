@@ -33,8 +33,17 @@ fun RecipeEditScreen(
             RecipeListTopAppBar(
                 title = stringResource(EditDestination.titleRes),
                 canNavigateBack = true,
-                navigateUp = onNavigateUp
-            ) }
+                navigateUp = onNavigateUp,
+                saveButton = true,
+                saveEnable = viewModel.validateInput(),
+                onSaveClick = {
+                    coroutineScope.launch {
+                        viewModel.updateRecipe()
+                        navigateBack()
+                    }
+                }
+            )
+        }
     ) {
         RecipeInsertBody(
             recipeUiState = viewModel.recipeUiState,
@@ -45,12 +54,6 @@ fun RecipeEditScreen(
             stepUiState = viewModel.stepUiState,
             onStepValueChange = viewModel::updateStepUiState,
             onStepRemove = viewModel::deleteStepUiState,
-            onSaveClicked = {
-                coroutineScope.launch {
-                    viewModel.updateRecipe()
-                    navigateBack()
-                }
-            },
             paddingValues = it
         )
     }
