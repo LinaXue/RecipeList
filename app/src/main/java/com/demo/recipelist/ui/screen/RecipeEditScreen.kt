@@ -1,11 +1,10 @@
 package com.demo.recipelist.ui.screen
 
-import androidx.compose.foundation.layout.padding
+import android.widget.Toast
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.demo.recipelist.R
@@ -28,6 +27,7 @@ fun RecipeEditScreen(
     viewModel: RecipeEditViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
     Scaffold(
         topBar = {
             RecipeListTopAppBar(
@@ -40,6 +40,7 @@ fun RecipeEditScreen(
                     coroutineScope.launch {
                         viewModel.updateRecipe()
                         navigateBack()
+                        Toast.makeText(context, "Recipe Saved!", Toast.LENGTH_LONG).show()
                     }
                 }
             )
