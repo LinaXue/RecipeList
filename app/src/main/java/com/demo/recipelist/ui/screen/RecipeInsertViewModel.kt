@@ -1,6 +1,5 @@
 package com.demo.recipelist.ui.screen
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -29,20 +28,20 @@ class RecipeInsertViewModel(
             title.isNotBlank() && time.isNotBlank() && servings.isNotBlank()
         }
     }
-    private fun validateIngredients(): String {
+    private fun validateIngredients(pattern: String = "/nexTNext/"): String {
         var ingredientsString = ""
         for (ing in ingredientUiState) {
             if (ing.isNotBlank()) {
-                ingredientsString = ingredientsString + ing + "\n"
+                ingredientsString = ingredientsString + ing + pattern
             }
         }
         return ingredientsString
     }
-    private fun validateSteps(): String {
+    private fun validateSteps(pattern: String = "/nexTNext/"): String {
         var stepsString = ""
         for (step in stepUiState) {
             if (step.isNotBlank()) {
-                stepsString = stepsString + step + "\n"
+                stepsString = stepsString + step + pattern
             }
         }
         return stepsString
@@ -65,19 +64,8 @@ class RecipeInsertViewModel(
     suspend fun insertRecipe() {
         if (recipeUiState.recipeDetails.title.isNotBlank()) {
             val newRecipe = recipeUiState.recipeDetails.toRecipe()
-            Log.d("InsertScreen", "old recipe: id = ${newRecipe.id}, title = ${newRecipe.title}, servings = ${newRecipe.servings}, ingredients = ${newRecipe.ingredients}, steps = ${newRecipe.steps} \n")
             newRecipe.ingredients = validateIngredients()
             newRecipe.steps = validateSteps()
-//            val newRecipe = Recipe(
-//                id = recipeUiState.recipeDetails.id,
-//                title = recipeUiState.recipeDetails.title,
-//                description = recipeUiState.recipeDetails.description,
-//                time = recipeUiState.recipeDetails.time,
-//                servings = recipeUiState.recipeDetails.servings.toIntOrNull() ?: 1,
-//                ingredients = validateIngredients(),
-//                steps = validateSteps()
-//            )
-            Log.d("InsertScreen", "new recipe: id = ${newRecipe.id}, title = ${newRecipe.title}, servings = ${newRecipe.servings}, ingredients = ${newRecipe.ingredients}, steps = ${newRecipe.steps} \n")
             recipeRepository.insertRecipe(newRecipe)
         }
     }

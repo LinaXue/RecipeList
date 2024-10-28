@@ -3,6 +3,7 @@ package com.demo.recipelist
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -34,6 +35,8 @@ fun RecipeListTopAppBar(
     saveButton: Boolean = false,
     saveEnable: Boolean = false,
     onSaveClick: () -> Unit = {},
+    editButton: Boolean = false,
+    onEditClick: () -> Unit = {},
     deleteButton: Boolean = false,
     onDeleteClick: () -> Unit = {},
     searchButton: Boolean = false,
@@ -75,6 +78,14 @@ fun RecipeListTopAppBar(
                     )
                 }
             }
+            if (editButton) {
+                IconButton(onClick = onEditClick) {
+                    Icon(
+                        imageVector = Icons.Filled.Edit,
+                        contentDescription = "Edit"
+                    )
+                }
+            }
             if (deleteButton) {
                 IconButton(onClick = onDeleteClick) {
                     Icon(
@@ -94,10 +105,8 @@ fun RecipeListTopAppBarPreview() {
         RecipeListTopAppBar(
             title = "TEST Screen",
             canNavigateBack = true,
-            searchButton = true,
-            saveButton = true,
-            saveEnable = false,
-            deleteButton = true
+            editButton = true,
+            deleteButton = true,
         )
     }
 }

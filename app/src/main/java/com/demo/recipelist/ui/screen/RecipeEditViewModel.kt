@@ -10,12 +10,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.demo.recipelist.data.RecipeRepository
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class RecipeEditViewModel(
@@ -24,11 +20,9 @@ class RecipeEditViewModel(
 ) : ViewModel() {
     var recipeUiState by mutableStateOf(RecipeUiState())
         private set
-
-    lateinit var ingredientUiState: SnapshotStateList<String>
+    var ingredientUiState = mutableStateListOf("")
         private set
-
-    var stepUiState = mutableStateListOf("", "")
+    var stepUiState = mutableStateListOf("")
         private set
 
     private val recipeId: Int = checkNotNull(savedStateHandle[EditDestination.recipeIdArg])
@@ -39,6 +33,15 @@ class RecipeEditViewModel(
                 .filterNotNull()
                 .first()
                 .toRecipeUiState(isInputValid = true)
+            ingredientUiState = stringToList(recipeUiState.recipeDetails.ingredients)
+            stepUiState = stringToList(recipeUiState.recipeDetails.steps)
+        }
+    }
+    private fun stringToList(items: String, pattern: String = "/nexTNext/"): SnapshotStateList<String> {
+        val newList = items.split(regex = pattern.toPattern()).toMutableList()
+        newList.removeAt(newList.size - 1)
+        return mutableStateListOf<String>().apply {
+            addAll(newList)
         }
     }
     fun updateUiState(recipeDetails: RecipeDetails) {
@@ -61,11 +64,9 @@ class RecipeEditViewModel(
     suspend fun updateRecipe() {
         if (validateInput(recipeUiState.recipeDetails)) {
             val newRecipe = recipeUiState.recipeDetails.toRecipe()
-            Log.d("EditScreen", "recipe: ${recipeUiState.recipeDetails.toRecipe()}")
             newRecipe.ingredients = validateIngredients()
             newRecipe.steps = validateSteps()
-            Log.d("InsertScreen", "new recipe: id = ${newRecipe.id}, title = ${newRecipe.title}, servings = ${newRecipe.servings}, ingredients = ${newRecipe.ingredients}, steps = ${newRecipe.steps} \n")
-            // recipeRepository.updateRecipe(newRecipe)
+            recipeRepository.updateRecipe(newRecipe)
         }
     }
 
@@ -74,20 +75,20 @@ class RecipeEditViewModel(
             title.isNotBlank() && description.isNotBlank() && time.isNotBlank()
         }
     }
-    private fun validateIngredients(): String {
+    private fun validateIngredients(pattern: String = "/nexTNext/"): String {
         var ingredientsString = ""
         for (ing in ingredientUiState) {
             if (ing.isNotBlank()) {
-                ingredientsString = ingredientsString + ing + "\n"
+                ingredientsString = ingredientsString + ing + pattern
             }
         }
         return ingredientsString
     }
-    private fun validateSteps(): String {
+    private fun validateSteps(pattern: String = "/nexTNext/"): String {
         var stepsString = ""
         for (step in stepUiState) {
             if (step.isNotBlank()) {
-                stepsString = stepsString + step + "\n"
+                stepsString = stepsString + step + pattern
             }
         }
         return stepsString

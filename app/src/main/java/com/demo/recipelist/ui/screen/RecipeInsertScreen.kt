@@ -1,31 +1,21 @@
 package com.demo.recipelist.ui.screen
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.outlined.Add
-import androidx.compose.material3.Button
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -40,7 +30,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -151,6 +140,7 @@ fun RecipeInsertBody(
                 value = item,
                 onValueChange = { onStepValueChange(index, it) },
                 onButtonClick = { onStepRemove(item) },
+                singleLine = false,
                 modifier = modifier.fillMaxWidth()
             )
         }
@@ -253,12 +243,13 @@ fun DraggableListRow(
     value: String,
     onValueChange: (String) -> Unit,
     onButtonClick: () -> Unit,
+    singleLine: Boolean = true,
     modifier: Modifier = Modifier
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier.padding(12.dp)
+        modifier = modifier.padding(12.dp).fillMaxWidth()
     ) {
         OutlinedTextField(
             placeholder = { Text(text = label) },
@@ -268,9 +259,12 @@ fun DraggableListRow(
                 // onValueChange(recipeDetails.copy(title = it))
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-            singleLine = true
+            singleLine = singleLine,
+            modifier = modifier.weight(6f)
         )
-        IconButton(onClick = onButtonClick) {
+        IconButton(
+            onClick = onButtonClick,
+            modifier = modifier.weight(1f)) {
             Icon(Icons.Default.Clear, contentDescription = null)
         }
     }
@@ -280,8 +274,8 @@ fun DraggableListRow(
 @Composable
 fun TestPreview() {
     RecipeListTheme {
-        val ingre = remember { mutableStateListOf("雞肉切塊", "香菇", "米酒") }
-        val steps = remember { mutableStateListOf("雞肉炒至上色", "加入香菇與水，小火燉煮") }
+        val ingre = remember { mutableStateListOf("雞肉切塊") }
+        val steps = remember { mutableStateListOf("雞肉炒至上色", "加入香菇與水，小火燉煮，aojegroihqnfiondcoiawnefnwejkcnjklacninefuinjncjAMvjcmsjbn") }
         RecipeInsertBody(
             recipeUiState = RecipeUiState(
                 recipeDetails = RecipeDetails(
