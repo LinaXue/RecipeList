@@ -272,7 +272,7 @@ fun DraggableListRow(
 
 @Preview(apiLevel = 33, showBackground = true)
 @Composable
-fun TestPreview() {
+fun InsertTestPreview() {
     RecipeListTheme {
         val ingre = remember { mutableStateListOf("雞肉切塊") }
         val steps = remember { mutableStateListOf("雞肉炒至上色", "加入香菇與水，小火燉煮，aojegroihqnfiondcoiawnefnwejkcnjklacninefuinjncjAMvjcmsjbn") }

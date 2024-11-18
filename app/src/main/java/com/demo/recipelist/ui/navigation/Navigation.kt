@@ -20,6 +20,7 @@ fun RecipeListNavHost(navController: NavHostController) {
     NavHost(
         navController = navController,
         startDestination = HomeDestination.route
+        // startDestination = TestDestination.route
     ) {
         composable(HomeDestination.route) {
             HomeScreen(

@@ -5,19 +5,18 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material.icons.filled.Save
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.demo.recipelist.ui.HomeScreen
 import com.demo.recipelist.ui.navigation.RecipeListNavHost
 import com.demo.recipelist.ui.theme.RecipeListTheme
 
@@ -73,7 +72,8 @@ fun RecipeListTopAppBar(
                     enabled = saveEnable,
                 ) {
                     Icon(
-                        painter = painterResource(R.drawable.baseline_save_24),
+                        // painter = painterResource(R.drawable.baseline_save_24),
+                        imageVector = Icons.Filled.Save,
                         contentDescription = "Save"
                     )
                 }
@@ -94,7 +94,8 @@ fun RecipeListTopAppBar(
                     )
                 }
             }
-        }
+        },
+
     )
 }
 
