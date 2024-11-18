@@ -6,12 +6,16 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.demo.recipelist.RecipeListApplication
+import com.demo.recipelist.ui.screen.PermissionViewModel
 import com.demo.recipelist.ui.screen.RecipeEditViewModel
 import com.demo.recipelist.ui.screen.RecipeInsertViewModel
 import com.demo.recipelist.ui.screen.RecipeDetailsViewModel
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {
+        initializer {
+            PermissionViewModel(recipeListApplication())
+        }
         initializer {
             HomeViewModel(recipeListApplication().container.recipeRepository)
         }
