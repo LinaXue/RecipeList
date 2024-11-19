@@ -4,10 +4,13 @@ import android.content.Context
 
 interface AppContainer {
     val recipeRepository: RecipeRepository
+    var userPreferencesRepository: UserPreferencesRepository
 }
 
 class AppDataContainer(private val context: Context): AppContainer {
     override val recipeRepository: RecipeRepository by lazy {
         OfflineRecipeRepository(RecipeDatabase.getDatabase(context).recipeDao())
     }
+
+    override lateinit var userPreferencesRepository: UserPreferencesRepository
 }

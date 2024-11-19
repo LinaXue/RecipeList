@@ -4,12 +4,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material.icons.filled.Save
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBarDefaults
@@ -29,8 +30,9 @@ fun RecipeListApp(navController: NavHostController = rememberNavController()) {
 @Composable
 fun RecipeListTopAppBar(
     title: String,
-    canNavigateBack: Boolean,
+    canNavigateBack: Boolean = false,
     navigateUp: () -> Unit = {},
+    showModalNavigationDrawer: () -> Unit = {},
     saveButton: Boolean = false,
     saveEnable: Boolean = false,
     onSaveClick: () -> Unit = {},
@@ -41,7 +43,7 @@ fun RecipeListTopAppBar(
     searchButton: Boolean = false,
     onSearchClick: () -> Unit = {}
 ) {
-    TopAppBar(
+    CenterAlignedTopAppBar(
         title = { Text(title) },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -52,7 +54,14 @@ fun RecipeListTopAppBar(
                 IconButton(onClick = navigateUp) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "NavigationIcon description"
+                        contentDescription = "Back"
+                    )
+                }
+            } else {
+                IconButton(onClick = showModalNavigationDrawer) {
+                    Icon(
+                        imageVector = Icons.Filled.Menu,
+                        contentDescription = "List"
                     )
                 }
             }
@@ -72,7 +81,6 @@ fun RecipeListTopAppBar(
                     enabled = saveEnable,
                 ) {
                     Icon(
-                        // painter = painterResource(R.drawable.baseline_save_24),
                         imageVector = Icons.Filled.Save,
                         contentDescription = "Save"
                     )
@@ -105,7 +113,7 @@ fun RecipeListTopAppBarPreview() {
     RecipeListTheme {
         RecipeListTopAppBar(
             title = "TEST Screen",
-            canNavigateBack = true,
+            canNavigateBack = false,
             editButton = true,
             deleteButton = true,
         )

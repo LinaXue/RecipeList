@@ -22,6 +22,13 @@ fun RecipeListNavHost(navController: NavHostController) {
         startDestination = HomeDestination.route
         // startDestination = TestDestination.route
     ) {
+//        object TestDestination : NavigationDestination {
+//            override val route = "test_screen"
+//            override val titleRes = R.string.test_screen_title
+//        }
+//        composable(TestDestination.route) {
+//            TestScreen()
+//        }
         composable(HomeDestination.route) {
             HomeScreen(
                 navigateToRecipeInsert = { navController.navigate(InsertDestination.route) },

@@ -60,6 +60,9 @@ dependencies {
     implementation("androidx.room:room-ktx:$room_version")
     ksp("androidx.room:room-compiler:$room_version")
 
+    // Preferences DataStore
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
+
     // Jetpack Compose integration
     implementation("androidx.navigation:navigation-compose:$nav_version")
 

@@ -1,12 +1,20 @@
 package com.demo.recipelist
 
 import android.app.Application
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import com.demo.recipelist.data.AppContainer
 import com.demo.recipelist.data.AppDataContainer
+import com.demo.recipelist.data.UserPreferencesRepository
 
-class RecipeListApplication: Application() {
+private const val LAYOUT_PREFERENCE_NAME = "layout_preferences"
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
+    name = LAYOUT_PREFERENCE_NAME
+)
 
-    /*
+/*
     The Application class is the base class for maintaining global application state.
     It contains all other components such as activities and services.
     The Application class, or any subclass of the Application class, is instantiated
@@ -17,12 +25,15 @@ class RecipeListApplication: Application() {
     所以在不同的 Activity 、 Service 中獲得的都是同一個實例。
     Application class 以及他的子類會在其他 class 之前先被實體化，主要用來初始化全域狀態、保存靜態
     變數，進行如資料傳遞、資料共享等操作。
-    */
+*/
+
+class RecipeListApplication: Application() {
 
     lateinit var container: AppContainer
 
     override fun onCreate() {
         super.onCreate()
         container = AppDataContainer(this)
+        container.userPreferencesRepository = UserPreferencesRepository(dataStore)
     }
 }
