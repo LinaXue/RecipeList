@@ -40,6 +40,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -49,32 +50,43 @@ import com.demo.recipelist.R
 import com.demo.recipelist.RecipeListTopAppBar
 import com.demo.recipelist.data.Recipe
 import com.demo.recipelist.ui.navigation.NavigationDestination
+import com.demo.recipelist.ui.screen.MealPlannerDestination
+import com.demo.recipelist.ui.screen.PetsProfileDestination
+import com.demo.recipelist.ui.screen.SettingsDestination
+import com.demo.recipelist.ui.screen.UserProfileDestination
 import com.demo.recipelist.ui.theme.RecipeListTheme
 import kotlinx.coroutines.launch
 
 object HomeDestination : NavigationDestination {
     override val route = "home_screen"
     override val titleRes =  R.string.home_screen_title
+    override val icon = null
 }
 
-val items =
-    listOf(
-        Icons.Default.AccountCircle,
-        Icons.Default.Favorite,
-        Icons.Default.PushPin,
-        Icons.Default.Settings,
-    )
+//val items =
+//    listOf(
+//        Icons.Default.AccountCircle,
+//        Icons.Default.Favorite,
+//        Icons.Default.PushPin,
+//        Icons.Default.Settings,
+//    )
 
 @Composable
 fun HomeScreen(
     navigateToRecipeInsert: () -> Unit,
     navigateToRecipeDetails: (Int) -> Unit,
+    navigateToUserProfile: () -> Unit,
+    navigateToPetsProfile: () -> Unit,
+    navigateToMealPlanner: () -> Unit,
+    navigateToSettings: () -> Unit,
     viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val homeUiState by viewModel.homeUiState.collectAsState()
+    val drawerItems = viewModel.drawerItems
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    val selectedItem = remember { mutableStateOf(items[0]) }
+    val selectedItem = remember { mutableStateOf(drawerItems[0]) }
+    val tag = "HomeScreen"
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -82,14 +94,21 @@ fun HomeScreen(
             ModalDrawerSheet(modifier = Modifier.width(250.dp)) {
                 Column(Modifier.verticalScroll(rememberScrollState())) {
                     Spacer(Modifier.height(12.dp))
-                    items.forEach { item ->
+                    drawerItems.forEach { item ->
                         NavigationDrawerItem(
-                            icon = { Icon(item, contentDescription = null) },
-                            label = { Text(item.name.substringAfterLast(".")) },
-                            selected = item == selectedItem.value,
+                            icon = { Icon(item.icon!!, contentDescription = null) },
+                            label = { Text(stringResource(id = item.titleRes)) },
+                            selected = false,
                             onClick = {
                                 scope.launch { drawerState.close() }
-                                selectedItem.value = item
+                                Log.d(tag, "NavigationDrawerItem: selectedItem = ${item.route}")
+                                when(item) {
+                                    is UserProfileDestination -> navigateToUserProfile()
+                                    is PetsProfileDestination -> navigateToPetsProfile()
+                                    is MealPlannerDestination -> navigateToMealPlanner()
+                                    is SettingsDestination -> navigateToSettings()
+                                }
+                                Log.d(tag, "go to ${item.route} screen")
                             },
                             modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                         )
@@ -200,7 +219,7 @@ fun RecipeItem(recipe: Recipe, onRecipeClick: (Recipe) -> Unit, modifier: Modifi
 @Composable
 fun HomeScreenPreview() {
     RecipeListTheme {
-        HomeScreen({},{} )
+        HomeScreen({},{},{},{},{},{})
     }
 }
 

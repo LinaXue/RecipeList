@@ -46,6 +46,7 @@ import kotlinx.coroutines.launch
 object DetailsDestination : NavigationDestination {
     override val route = "details_screen"
     override val titleRes = R.string.details_screen_title
+    override val icon = null
     const val recipeIdArg = "recipeId"
     val routeWithArgs = "$route/{$recipeIdArg}"
 }

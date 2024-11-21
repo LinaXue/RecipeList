@@ -75,6 +75,15 @@ fun RecipeListTopAppBar(
                     )
                 }
             }
+//            IconButton(
+//                onClick = { selectLayout(!isLinearLayout) }
+//            ) {
+//                Icon(
+//                    painter = painterResource(uiState.toggleIcon),
+//                    contentDescription = stringResource(uiState.toggleContentDescription),
+//                    tint = MaterialTheme.colorScheme.onBackground
+//                )
+//            }
             if (saveButton) {
                 IconButton(
                     onClick = onSaveClick,

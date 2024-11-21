@@ -17,7 +17,10 @@ object AppViewModelProvider {
             PermissionViewModel(recipeListApplication())
         }
         initializer {
-            HomeViewModel(recipeListApplication().container.recipeRepository)
+            HomeViewModel(
+                recipeListApplication().container.recipeRepository,
+                recipeListApplication().container.userPreferencesRepository
+            )
         }
         initializer {
             RecipeInsertViewModel(recipeListApplication().container.recipeRepository)
