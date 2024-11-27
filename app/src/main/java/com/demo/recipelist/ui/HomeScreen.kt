@@ -228,7 +228,7 @@ fun RecipeItem(recipe: Recipe, onRecipeClick: (Recipe) -> Unit, modifier: Modifi
 @Preview(apiLevel = 33, showBackground = false)
 @Composable
 fun HomeBodyPreview() {
-    RecipeListTheme(darkTheme = false) {
+    RecipeListTheme() {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.surfaceBright

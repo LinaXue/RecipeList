@@ -17,17 +17,7 @@ class UserPreferencesRepository(
     private companion object {
         const val TAG = "UserPreferencesRepo"
         val IS_LINEAR_LAYOUT = booleanPreferencesKey("is_linear_layout")
-    }
-
-    // 寫入 Preferences DataStore >>
-    // 將 lambda 傳遞至 edit() 即可在 DataStore 中建立和更新值
-    // lambda 會傳遞 MutablePreferences 的執行個體，用於更新 DataStore 中的值。
-    // 注意：除非呼叫這個函式且已設定值，否則該值不會存在於 DataStore 中。
-    // 在 edit() 中設定鍵/值組合，即會定義並初始化該值，直至 App 的快取或資料遭到清除為止。
-    suspend fun saveLayoutPreference(isLinearLayout: Boolean) {
-        dataStore.edit { preferences ->
-            preferences[IS_LINEAR_LAYOUT] = isLinearLayout
-        }
+        val IS_DARK_Theme = booleanPreferencesKey("is_dark_theme")
     }
 
     // 從 Preferences DataStore 讀取 >>
@@ -48,4 +38,34 @@ class UserPreferencesRepository(
             // 尚未呼叫 saveLayoutPreference，preferences[IS_LINEAR_LAYOUT]不一定存在
             preferences[IS_LINEAR_LAYOUT] ?: true
         }
+
+    val isDarkTheme: Flow<Boolean> = dataStore.data
+        .catch {
+            if(it is IOException) {
+                Log.e(TAG, "Error reading preferences.", it)
+                emit(emptyPreferences())
+            } else {
+                throw it
+            }
+        }
+        .map { preferences ->
+            preferences[IS_DARK_Theme] ?: false
+        }
+
+    // 寫入 Preferences DataStore >>
+    // 將 lambda 傳遞至 edit() 即可在 DataStore 中建立和更新值
+    // lambda 會傳遞 MutablePreferences 的執行個體，用於更新 DataStore 中的值。
+    // 注意：除非呼叫這個函式且已設定值，否則該值不會存在於 DataStore 中。
+    // 在 edit() 中設定鍵/值組合，即會定義並初始化該值，直至 App 的快取或資料遭到清除為止。
+    suspend fun saveLayoutPreference(isLinearLayout: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[IS_LINEAR_LAYOUT] = isLinearLayout
+        }
+    }
+
+    suspend fun saveThemePreference(isDarkTheme: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[IS_DARK_Theme] = isDarkTheme
+        }
+    }
 }

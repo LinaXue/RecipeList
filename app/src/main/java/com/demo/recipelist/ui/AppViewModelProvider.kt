@@ -10,9 +10,13 @@ import com.demo.recipelist.ui.screen.PermissionViewModel
 import com.demo.recipelist.ui.screen.RecipeEditViewModel
 import com.demo.recipelist.ui.screen.RecipeInsertViewModel
 import com.demo.recipelist.ui.screen.RecipeDetailsViewModel
+import com.demo.recipelist.ui.screen.SettingsViewModel
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {
+        initializer {
+            SettingsViewModel(recipeListApplication().container.userPreferencesRepository)
+        }
         initializer {
             PermissionViewModel(recipeListApplication())
         }

@@ -12,11 +12,15 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.demo.recipelist.ui.AppViewModelProvider
+import com.demo.recipelist.ui.screen.SettingsViewModel
 
 private val lightScheme = lightColorScheme(
     primary = primaryLight,
@@ -260,13 +264,15 @@ val unspecified_scheme = ColorFamily(
 
 @Composable
 fun RecipeListTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    viewModel: SettingsViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    // darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    // dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
+    val modeState = viewModel.sittingsUiState.collectAsState()
     val colorScheme =
-        if (darkTheme) {
+        if (modeState.value.mode) {
             mediumContrastDarkColorScheme
         } else {
             mediumContrastLightColorScheme
@@ -286,7 +292,7 @@ fun RecipeListTheme(
         SideEffect {
             val window = (view.context as Activity).window
             window.statusBarColor = colorScheme.primary.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = modeState.value.mode
         }
     }
 

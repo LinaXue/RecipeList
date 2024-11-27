@@ -173,7 +173,7 @@ private fun RecipeDetailsBody(
                 text = stringResource(id = R.string.recipe_ingredients),
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 4.dp)
             )
@@ -189,7 +189,7 @@ private fun RecipeDetailsBody(
                 text = stringResource(id = R.string.recipe_steps),
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 4.dp)
             )
