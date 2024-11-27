@@ -13,9 +13,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.demo.recipelist.R
 import com.demo.recipelist.RecipeListTopAppBar
 import com.demo.recipelist.ui.navigation.NavigationDestination
+import com.demo.recipelist.ui.theme.RecipeListTheme
 
 object SettingsDestination : NavigationDestination {
     override val route = "settings_screen"
@@ -44,5 +46,13 @@ fun SettingsScreen(
         ) {
             Text(text = "Test Screen")
         }
+    }
+}
+
+@Preview(apiLevel = 33, showBackground = true)
+@Composable
+fun SettingsScreenPreview() {
+    RecipeListTheme {
+        SettingsScreen({})
     }
 }

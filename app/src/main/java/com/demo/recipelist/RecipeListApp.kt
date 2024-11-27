@@ -46,8 +46,7 @@ fun RecipeListTopAppBar(
     CenterAlignedTopAppBar(
         title = { Text(title) },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            titleContentColor = MaterialTheme.colorScheme.primary
+            titleContentColor = MaterialTheme.colorScheme.primaryContainer
         ),
         navigationIcon = {
             if (canNavigateBack) {

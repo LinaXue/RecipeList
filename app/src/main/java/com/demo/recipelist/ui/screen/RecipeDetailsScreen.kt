@@ -3,12 +3,15 @@ package com.demo.recipelist.ui.screen
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.AlertDialog
@@ -99,7 +102,9 @@ fun RecipeDetailsScreen(
             recipeDetails = uiState.value,
             ingList = viewModel.stringToList(uiState.value.ingredients),
             stepList = viewModel.stringToList(uiState.value.steps),
-            modifier = Modifier.padding(it)
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it)
         )
     }
 }
@@ -114,33 +119,32 @@ private fun RecipeDetailsBody(
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(10.dp),
         modifier = modifier
-            .fillMaxSize()
             .padding(12.dp)
     ) {
         item {
             Text(
                 text = recipeDetails.title,
+                color = MaterialTheme.colorScheme.primary,
                 fontSize = 36.sp,
                 fontWeight = FontWeight.ExtraBold,
-                modifier = modifier
-                    .wrapContentHeight()
-                    .padding(vertical = 4.dp)
+                maxLines = 1,
+                modifier = Modifier.wrapContentHeight()
             )
         }
         item {
             Card(
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
-                    .wrapContentHeight()
-                    .padding(vertical = 4.dp),
+                    .height(IntrinsicSize.Min)
+                    .wrapContentHeight(),
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onTertiaryContainer
                 )
             ) {
                 Text(
                     text = recipeDetails.description,
-                    modifier = modifier.padding(12.dp)
+                    modifier = Modifier.padding(12.dp)
                 )
             }
         }
@@ -148,9 +152,9 @@ private fun RecipeDetailsBody(
             HorizontalDivider()
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
+                    .wrapContentHeight()
                     .padding(12.dp)
             ) {
                 Text(
@@ -209,8 +213,8 @@ fun StringListRow(
 ) {
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+            containerColor = MaterialTheme.colorScheme.surfaceContainer,
+            contentColor = MaterialTheme.colorScheme.onSurface
         ),
         // modifier = modifier.padding(8.dp)
     ) {

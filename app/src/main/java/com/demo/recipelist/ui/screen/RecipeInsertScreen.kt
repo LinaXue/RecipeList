@@ -108,7 +108,7 @@ fun RecipeInsertBody(
             RecipeInputForm(
                 recipeDetails = recipeUiState.recipeDetails,
                 onValueChange = onRecipeValueChange,
-                modifier = modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
             )
         }
         item {
@@ -116,7 +116,7 @@ fun RecipeInsertBody(
             ListTitleRow(
                 title = stringResource(id = R.string.recipe_ingredients),
                 stringUiState = ingredientsUiState,
-                modifier = modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
             )
         }
         itemsIndexed(ingredientsUiState) { index, item ->
@@ -125,7 +125,7 @@ fun RecipeInsertBody(
                 value = item,
                 onValueChange = { onIngredientValueChange(index, it) },
                 onButtonClick = { onIngredientRemove(item) },
-                modifier = modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
             )
         }
         item {
@@ -133,7 +133,7 @@ fun RecipeInsertBody(
             ListTitleRow(
                 title = stringResource(id = R.string.recipe_steps),
                 stringUiState = stepUiState,
-                modifier = modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
             )
         }
         itemsIndexed(stepUiState) { index, item ->
@@ -143,7 +143,7 @@ fun RecipeInsertBody(
                 onValueChange = { onStepValueChange(index, it) },
                 onButtonClick = { onStepRemove(item) },
                 singleLine = false,
-                modifier = modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
             )
         }
     }
